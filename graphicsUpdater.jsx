@@ -163,7 +163,7 @@ function resetMap() {
     }
     app.preferences.smartQuotes = originalSmartQuotes;
     w.close();
-
+    updateGraphic(0, 0);
 
     function wrapper() {
         // reset all states to grey
@@ -192,9 +192,13 @@ function resetMap() {
 }
 
 function updateGraphic(biden, trump) {
+    var historyString = "Update figures";
+    if (biden === 0 && trump === 0) {
+        historyString = "Reset figures"
+    }
     var otherDoc = app.documents.getByName("light_barchart.psd");
     app.activeDocument = otherDoc;
-    otherDoc.suspendHistory("Update figures", "wrapper()");
+    otherDoc.suspendHistory(historyString, "wrapper()");
     win.close();
     function wrapper() {
         var trumpNum = otherDoc.artLayers.getByName("TRUMP NUMBER").textItem;
