@@ -40,17 +40,21 @@ for (var i = 0; i < states.length; i++) {
     sub.orientation = "row";
     sub.add("statictext", undefined, "Trump:");
     if (states[i].winner === "Trump") {
-        sub.add("edittext", undefined, states[i].votes);
+        var trumpbox = sub.add("edittext", undefined, states[i].votes);
     } else {
-        sub.add("edittext", undefined, 0);
+        var trumpbox = sub.add("edittext", undefined, 0);
     }
     sub.add("statictext", undefined, "          Biden:");
     if (states[i].winner === "Biden") {
-        sub.add("edittext", undefined, states[i].votes);
+        var bidenbox = sub.add("edittext", undefined, states[i].votes);
     } else {
-        sub.add("edittext", undefined, 0);
+        var bidenbox = sub.add("edittext", undefined, 0);
     }
     // g.add("statictext", undefined, "Item " + (i + 1));
+    if (states[i].name === "Nebraska" || states[i].name === "Maine") {
+        trumpbox.text = states[i].trump;
+        bidenbox.text = states[i].biden;
+    }
 }
 
 var scrollBar = p.add("scrollbar");
@@ -131,6 +135,10 @@ function parseResults() {
                 selectLayerById(currentState.id);
                 setColourOfShapeLayerFill(dem);
                 states[i].votes = biden;
+            }
+            if (states[i].name === "Nebraska" || states[i].name === "Maine") {
+                states[i].trump = trump;
+                states[i].biden = biden;
             }
         }
 
